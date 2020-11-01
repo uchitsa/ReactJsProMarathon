@@ -11,5 +11,5 @@ interface MyHomeTask {
 interface MyArray<T> {
     [N: number]: T;
 
-    reduce(fn: (accum: T, curr: T) => T): T;
+    reduce<U>(fn: (accum: T, curr: T) => U, init: U): U;
 }
