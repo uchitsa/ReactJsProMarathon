@@ -1,27 +1,36 @@
-const path = require("path");
-const HTMLWebpackPlugins = require("html-webpack-plugin");
+const path = require('path');
+const HTMLWebpackPlugins = require('html-webpack-plugin');
 const NODE_ENV = process.env.NODE_ENV;
 module.exports = {
-    resolve: {
-        extensions: [".js",".jsx",".ts",".tsx",".json"]
-    },
-    mode: NODE_ENV ? NODE_ENV : "development",
-    entry: path.resolve(__dirname, "src/index.js"),
-    output: {
-        path: path.resolve(__dirname, "dist"),
-        filename: "main.js"
-    },
-    module: {
-        rules: [
-            {
-                test: /\.[tj]sx?$/,
-                use: ["ts-loader"],
-            }
-        ]
-    },
-    plugins: [
-        new HTMLWebpackPlugins({
-            template: path.resolve(__dirname, "public/index.html"),
-        })
-    ]
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+  },
+  mode: NODE_ENV ? NODE_ENV : 'development',
+  entry: path.resolve(__dirname, 'src/index.ts'),
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.[tj]sx?$/,
+        exclude: /node_modules/,
+        use: ['ts-loader'],
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-modules-typescript-loader?modules', 'sass-loader'],
+      },
+    ],
+  },
+  plugins: [
+    new HTMLWebpackPlugins({
+      template: path.resolve(__dirname, 'public/index.html'),
+    }),
+  ],
 };

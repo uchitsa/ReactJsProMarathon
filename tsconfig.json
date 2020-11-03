@@ -1,13 +1,19 @@
 {
-    "compilerOptions": {
-      "target": "es5",
-      "module": "commonjs",
-      "allowJs": true,
-      "jsx": "react",
-      "sourceMap": true,
-      "strict": true,
-      "esModuleInterop": true,
-    },
-    "include": ["src/**/*"],
-"exclude": ["node_modules", "**/*.spec.ts"]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "jsx": "react",
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }
