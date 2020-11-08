@@ -27,7 +27,7 @@ module.exports = {
         use: ['style-loader', 'css-modules-typescript-loader?modules', 'sass-loader'],
       },
       {
-        test: /\.(ttf|eot|svg)(\?v=\d+\.d+\.\d+)?$/,
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.d+\.\d+)?$/,
         use: [
             {
                 loader: 'file-loader',
@@ -37,6 +37,10 @@ module.exports = {
                 },
             },
             ],
+      },
+      {
+        test: [/\.bmp$/, /\.gif$/, /\.bmp$/, /\.jpe?g$/, /\.png$/],
+        use: ['url-loader'],
       },
     ],
   },
