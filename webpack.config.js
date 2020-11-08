@@ -26,6 +26,18 @@ module.exports = {
         test: /\.scss$/,
         use: ['style-loader', 'css-modules-typescript-loader?modules', 'sass-loader'],
       },
+      {
+        test: /\.(ttf|eot|svg)(\?v=\d+\.d+\.\d+)?$/,
+        use: [
+            {
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    outputPath: 'fonts/',
+                },
+            },
+            ],
+      },
     ],
   },
   plugins: [
