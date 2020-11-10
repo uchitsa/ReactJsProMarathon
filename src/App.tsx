@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
-
-import Header from "./components/Header";
-import Footer from "./components/Footer"
-import Button from "./components/Button";
 import {useRoutes} from "hookrouter";
 import routes from "./routes";
+import NotFoundPage from "./pages/NotFound";
 
 const App = () => {
     const match = useRoutes(routes);
-    return match;
+    return match || <NotFoundPage/>;
 };
 
 export default App;
