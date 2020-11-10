@@ -1,5 +1,6 @@
 import React from 'react';
-import {A} from "hookrouter";
+import {A, usePath} from "hookrouter";
+import cn from 'classnames';
 import s from './Header.module.scss';
 import Layout from '../Layout';
 
@@ -9,7 +10,7 @@ interface IMenu {
     link: string;
 }
 
-const MENU: IMenu[] = [
+export const GENERAL_MENU: IMenu[] = [
     {
         id: 1,
         value: 'Home',
@@ -32,14 +33,29 @@ const MENU: IMenu[] = [
     },
 ];
 const Header = () => {
-    return <table>
-        <tr>
-            <td>Home</td>
-            <td>Pokedex</td>
-            <td>Legendaries</td>
-            <td>Documentation</td>
-        </tr>
-    </table>
+    const path = usePath();
+    return (
+        <div className={s.root}>
+            <Layout>
+                <div className={s.wrap}>
+                    <div className={s.pokemonLogo}>
+                        <PokemonLogoSvg/>
+                    </div>
+                    <div className={s.menuWrap}>
+                        {GENERAL_MENU.map(({title, link}) => {
+                            <A key={title}
+                               href={link}
+                               className={cn(s.menuLink, {
+                                   [s.activeLink]: link === path,
+                               })}>
+                                {title}
+                            </A>
+                        })}
+                    </div>
+                </div>
+            </Layout>
+        </div>
+    )
 }
 
 export default Header;
