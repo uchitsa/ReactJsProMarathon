@@ -3,28 +3,41 @@ import Layout from "../../components/Layout";
 
 import s from './Pokedex.module.scss';
 
-const PokedexPage = () => {
-    const [totalPokemons, setTotalPokemons] = useState(0);
-    const [pokemons, setPokemons] = useState([]);
+const usePokemons = () => {
+    const [data, setData] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
-        setIsLoading(true);
-        fetch('http://zar.hosthot.ru/api/v1/pokemons')
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setTotalPokemons(data.total);
-                setPokemons(data.pokemons);
-            })
-            .catch(() => {
+        const getPokemons = async () => {
+            setIsLoading(true);
+            try {
+                const response = await fetch('http://zar.hosthot.ru/api/v1/pokemons')
+                const result = await response.json();
+
+                setData(result);
+            } catch (e) {
                 setIsError(true);
-            })
-            .finally(() => {
+            } finally {
                 setIsLoading(false);
-            })
+            }
+        }
+        getPokemons();
     }, []);
+
+    return {
+        data,
+        isLoading,
+        isError
+    }
+}
+
+const PokedexPage = () => {
+    const {
+        data,
+        isLoading,
+        isError
+    } = usePokemons();
 
     if (isLoading) {
         return <div>Loading...</div>
@@ -37,10 +50,10 @@ const PokedexPage = () => {
     return (
         <>
             <Layout className={s.root}>
-                {totalPokemons} <b>Pokemons</b> for you to choos your favorite
+                {data.total} <b>Pokemons</b> for you to choos your favorite
             </Layout>
             <div>
-                {pokemons.map(item => <div>{item.name}</div>)}
+                {data.pokemons.map(item => <div>{item.name}</div>)}
             </div>
         </>
     )
