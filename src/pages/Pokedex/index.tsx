@@ -4,7 +4,7 @@ import Layout from "../../components/Layout";
 import s from './Pokedex.module.scss';
 
 const usePokemons = () => {
-    const [data, setData] = useState(0);
+    const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 
