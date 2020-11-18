@@ -11,8 +11,9 @@ const usePokemons = () => {
     useEffect(() => {
         const getPokemons = async () => {
             setIsLoading(true);
+            const url = `${config.client.server.protocol}://${config.client.server.host}${config.client.endpoint.getPokemons.uri.pathname}`;
             try {
-                const response = await fetch('http://zar.hosthot.ru/api/v1/pokemons')
+                const response = await fetch(url);
                 const result = await response.json();
 
                 setData(result);
