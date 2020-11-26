@@ -2,11 +2,18 @@ import React, {useEffect, useState} from "react";
 import Layout from "../../components/Layout";
 
 import s from './Pokedex.module.scss';
+import {IPokemons, PokemonsRequest} from "../../interface/pokemon";
+import {setQueryParams} from "hookrouter";
+
+export interface IQuery {
+    name?: string,
+}
 
 const usePokemons = () => {
-    const [data, setData] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isError, setIsError] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
+    const [query, setQuery] = useState<IQuery>({});
+
+    const {data, isLoading, isError} = useData<IPokemons>('getPokemons', query, [searchValue]);
 
     useEffect(() => {
         const getPokemons = async () => {
@@ -47,13 +54,23 @@ const PokedexPage = () => {
         return <div>Something wrong!</div>
     }
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(e.target.value);
+        setQuery((state: IQuery) => ({
+            ...state,
+            name: e.target.value,
+        }))
+    };
     return (
         <>
             <Layout className={s.root}>
                 {data.total} <b>Pokemons</b> for you to choos your favorite
             </Layout>
             <div>
-                {data.pokemons.map(item => <div>{item.name}</div>)}
+                <input type="text" value={searchValue} onChange={handleSearchChange}/>
+            </div>
+            <div>
+                {!isLoading && data && data.pokemons.map((item: PokemonsRequest) => <div>{item.name}</div>)}
             </div>
         </>
     )
